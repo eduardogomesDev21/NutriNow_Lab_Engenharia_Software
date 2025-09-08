@@ -1,18 +1,17 @@
-// src/app/cadastro/cadastro.component.ts
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CadastroService, Usuario } from '../services/cadastro.service';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [FormsModule, CommonModule], // ← Adicione estes imports
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.css'
+  styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent {
-  usuario: Usuario = {
+  usuario = {
     nome: '',
     sobrenome: '',
     data_nascimento: '',
@@ -21,36 +20,23 @@ export class CadastroComponent {
     senha: ''
   };
 
-  mensagem: string = '';
-  erro: string = '';
+  mensagem = '';
+  erro = '';
 
-  constructor(private cadastroService: CadastroService) {}
+  constructor(private http: HttpClient) {}
 
   criarConta(): void {
     this.mensagem = '';
     this.erro = '';
 
-    this.cadastroService.criarConta(this.usuario).subscribe({
-      next: (response) => {
-        this.mensagem = 'Conta criada com sucesso!';
-        console.log('Sucesso:', response);
-        this.limparFormulario();
+    this.http.post('http://localhost:5000/criar-conta', this.usuario).subscribe({
+      next: (res: any) => {
+        this.mensagem = res.message || 'Conta criada com sucesso!';
+        this.usuario = { nome: '', sobrenome: '', data_nascimento: '', genero: '', email: '', senha: '' };
       },
-      error: (error) => {
-        this.erro = error.error?.error || 'Erro ao criar conta';
-        console.error('Erro:', error);
+      error: (err) => {
+        this.erro = err.error?.error || 'Erro ao criar conta';
       }
     });
-  }
-
-  private limparFormulario(): void {
-    this.usuario = {
-      nome: '',
-      sobrenome: '',
-      data_nascimento: '',
-      genero: '',
-      email: '',
-      senha: ''
-    };
   }
 }

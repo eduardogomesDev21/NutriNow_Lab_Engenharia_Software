@@ -1,17 +1,13 @@
 <div class="cadastro-container">
   <header class="cadastro-header">
-    <!-- Logo transformada em ícone -->
     <div class="logo">
       <img src="assets/nutrinow-logo.svg" alt="NutriNow Logo">
     </div>
-
     <nav class="menu">
       <a href="#">Home</a>
       <a href="#">ChatBot</a>
       <a href="#">Artigos</a>
     </nav>
-
-    <!-- Ícone de perfil -->
     <div class="perfil">
       <img src="assets/user-icon.svg" alt="Perfil">
     </div>
@@ -23,23 +19,23 @@
   </section>
 
   <section class="form-section">
-    <form class="cadastro-form">
+    <form class="cadastro-form" (ngSubmit)="criarConta()" #form="ngForm">
       <div class="input-group">
         <label>Nome</label>
-        <input type="text" placeholder="Nome">
+        <input type="text" placeholder="Nome" [(ngModel)]="usuario.nome" name="nome" required>
       </div>
       <div class="input-group">
         <label>Sobrenome</label>
-        <input type="text" placeholder="Sobrenome">
+        <input type="text" placeholder="Sobrenome" [(ngModel)]="usuario.sobrenome" name="sobrenome" required>
       </div>
       <div class="input-group">
         <label>Data de nascimento</label>
-        <input type="date">
+        <input type="date" [(ngModel)]="usuario.data_nascimento" name="data_nascimento" required>
       </div>
       <div class="input-group">
         <label>Gênero</label>
-        <select>
-          <option>Selecione o seu gênero</option>
+        <select [(ngModel)]="usuario.genero" name="genero" required>
+          <option value="">Selecione o seu gênero</option>
           <option>Masculino</option>
           <option>Feminino</option>
           <option>Não-binário</option>
@@ -48,19 +44,22 @@
       </div>
       <div class="input-group">
         <label>Email</label>
-        <input type="email" placeholder="Digite seu email">
+        <input type="email" placeholder="Digite seu email" [(ngModel)]="usuario.email" name="email" required>
       </div>
       <div class="input-group">
         <label>Senha</label>
-        <input type="password" placeholder="Crie uma senha">
+        <input type="password" placeholder="Crie uma senha" [(ngModel)]="usuario.senha" name="senha" required>
       </div>
       <div class="buttons">
-        <button type="submit" class="btn-primary">Criar Conta</button>
+        <button type="submit" class="btn-primary" [disabled]="form.invalid">Criar Conta</button>
         <button type="button" class="btn-secondary">Voltar</button>
       </div>
       <p class="login-link">
         Já possui uma conta? <a href="#">Entrar agora</a>
       </p>
     </form>
+
+    <p *ngIf="mensagem" class="mensagem-sucesso">{{ mensagem }}</p>
+    <p *ngIf="erro" class="mensagem-erro">{{ erro }}</p>
   </section>
 </div>

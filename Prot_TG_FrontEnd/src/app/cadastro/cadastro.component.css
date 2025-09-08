@@ -4,6 +4,7 @@
   background: linear-gradient(to bottom right, #14b8a6, #0f766e);
   min-height: 100vh;
   color: #fff;
+  padding: 20px;
 }
 
 /* Header */
@@ -14,15 +15,15 @@
   padding: 20px 50px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  border-radius: 12px;
 }
 
-/* Logo transformada em ícone */
-.cadastro-header .logo img {
-  width: 50px;
-  height: 50px;
+.cadastro-header .logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #e0f7f4;
 }
 
-/* Menu */
 .cadastro-header .menu a {
   margin: 0 15px;
   text-decoration: none;
@@ -30,15 +31,14 @@
   font-weight: 500;
   transition: color 0.2s;
 }
+
 .cadastro-header .menu a:hover {
   color: #fff;
 }
 
-/* Ícone de perfil */
 .cadastro-header .perfil img {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
 }
 
 /* Introdução */
@@ -46,13 +46,16 @@
   text-align: center;
   margin: 50px 20px 30px 20px;
 }
+
 .intro h1 {
   font-size: 36px;
   margin-bottom: 10px;
 }
+
 .intro h1 span {
   color: #a5f3fc;
 }
+
 .intro p {
   font-size: 18px;
   color: #d1faf8;
@@ -64,6 +67,7 @@
   justify-content: center;
   padding: 20px;
 }
+
 .cadastro-form {
   background: rgba(255,255,255,0.95);
   color: #333;
@@ -72,16 +76,24 @@
   max-width: 500px;
   width: 100%;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
+
 .input-group {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
+
 .input-group label {
-  display: block;
   margin-bottom: 6px;
   font-weight: 600;
 }
-.input-group input, .input-group select {
+
+.input-group input,
+.input-group select {
   width: 100%;
   padding: 10px 14px;
   border-radius: 6px;
@@ -89,7 +101,9 @@
   font-size: 16px;
   transition: border 0.2s;
 }
-.input-group input:focus, .input-group select:focus {
+
+.input-group input:focus,
+.input-group select:focus {
   border-color: #14b8a6;
   outline: none;
 }
@@ -100,6 +114,7 @@
   justify-content: space-between;
   margin-top: 20px;
 }
+
 .btn-primary {
   background-color: #14b8a6;
   color: #fff;
@@ -110,9 +125,11 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn-primary:hover {
   background-color: #0f766e;
 }
+
 .btn-secondary {
   background-color: #e0f7f4;
   color: #0f766e;
@@ -123,8 +140,20 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn-secondary:hover {
   background-color: #c7f0ed;
+}
+
+/* Mensagens */
+.mensagem-sucesso {
+  color: green;
+  margin-top: 10px;
+}
+
+.mensagem-erro {
+  color: red;
+  margin-top: 10px;
 }
 
 /* Link de login */
@@ -132,12 +161,14 @@
   text-align: center;
   margin-top: 20px;
 }
+
 .login-link a {
   color: #14b8a6;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s;
 }
+
 .login-link a:hover {
   color: #0f766e;
 }
