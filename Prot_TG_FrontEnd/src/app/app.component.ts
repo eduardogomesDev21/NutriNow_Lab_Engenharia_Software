@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  template: `<router-outlet></router-outlet>`, // ← Aqui vai o componente da rota
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'fitness-app';
+}
