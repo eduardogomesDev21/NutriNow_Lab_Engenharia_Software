@@ -1,49 +1,49 @@
-
-
-<div id="webcrumbs" class="login-container">
-  
-  <!-- Topo -->
+<div class="login-container">
   <header class="login-header">
     <button class="icon-btn"><i class="material-symbols-outlined">lock</i></button>
 
     <nav class="menu">
-      <button class="menu-btn">Home</button>
-      <button class="menu-btn">ChatBot</button>
-      <button class="menu-btn">Artigos</button>
+      <a routerLink="/home" class="menu-btn">Home</a>
+      <a routerLink="/chatbot" class="menu-btn">ChatBot</a>
+      <a routerLink="/artigos" class="menu-btn">Artigos</a>
     </nav>
 
     <button class="icon-btn"><i class="material-symbols-outlined">person</i></button>
   </header>
 
-  <!-- Card de Login -->
   <main class="login-card">
     <h1>Bem-vindo de volta</h1>
 
     <button class="btn-social google">
       <i class="fa-brands fa-google"></i> Conectar com o Google
     </button>
-
+    
     <button class="btn-social facebook">
       <i class="fa-brands fa-facebook"></i> Conectar com o Facebook
     </button>
 
     <div class="divider"><span>OU</span></div>
 
-    <div class="input-group">
-      <i class="material-symbols-outlined">email</i>
-      <input type="email" placeholder="Email" />
-    </div>
+    <form class="login-form" (ngSubmit)="login()" #form="ngForm">
+      <div class="input-group">
+        <i class="material-symbols-outlined">email</i>
+        <input type="email" placeholder="Email" [(ngModel)]="credenciais.email" name="email" required />
+      </div>
 
-    <div class="input-group">
-      <i class="material-symbols-outlined">lock</i>
-      <input type="password" placeholder="Senha" />
-    </div>
+      <div class="input-group">
+        <i class="material-symbols-outlined">lock</i>
+        <input type="password" placeholder="Senha" [(ngModel)]="credenciais.senha" name="senha" required />
+      </div>
 
-    <button class="btn-primary">Entrar</button>
-    <button class="btn-secondary">Criar conta</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Entrar</button>
+      <button type="button" class="btn-secondary" routerLink="/cadastro">Criar conta</button>
+    </form>
 
     <button class="forgot-pass">
       <span class="material-symbols-outlined">help</span> Esqueci minha senha
     </button>
+
+    <p *ngIf="mensagem" class="mensagem-sucesso">{{ mensagem }}</p>
+    <p *ngIf="erro" class="mensagem-erro">{{ erro }}</p>
   </main>
 </div>
