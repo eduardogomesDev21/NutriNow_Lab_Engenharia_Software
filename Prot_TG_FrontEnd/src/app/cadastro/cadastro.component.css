@@ -1,10 +1,24 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 /* Container principal */
 .cadastro-container {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(to bottom right, #14b8a6, #0f766e);
   min-height: 100vh;
-  color: #fff;
   padding: 20px;
+  width: 100%;
+}
+
+
+
+.perfil{
+  color:#fff;
 }
 
 /* Header */
@@ -45,6 +59,7 @@
 .intro {
   text-align: center;
   margin: 50px 20px 30px 20px;
+  color: #fff;
 }
 
 .intro h1 {
@@ -68,11 +83,20 @@
   padding: 20px;
 }
 
+.cadastro-form input {
+  width: 95%;
+  padding: 12px 15px;
+   border: 1px solid #14b8a6;
+  border-radius: 30px; /* deixa bem arredondado */
+  outline: 10px;
+  font-size: 16px;
+}
+
 .cadastro-form {
   background: rgba(255,255,255,0.95);
   color: #333;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 30px;
   max-width: 500px;
   width: 100%;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -171,4 +195,30 @@
 
 .login-link a:hover {
   color: #0f766e;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 95%;
+  border-radius: 20px;
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 70%;
+  right: 40px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  color: rgba(0, 0, 0, 0.5); /* cinza meio transparente */
 }

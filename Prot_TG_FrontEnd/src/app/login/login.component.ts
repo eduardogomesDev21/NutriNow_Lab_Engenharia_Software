@@ -12,6 +12,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   encapsulation: ViewEncapsulation.None // 🔑 permite estilizar body e aplicar reset global só nesse componente
 })
 export class LoginComponent {
+
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
   credenciais = {
     email: '',
     senha: ''
@@ -20,7 +26,7 @@ export class LoginComponent {
   mensagem = '';
   erro = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(): void {
     this.mensagem = '';

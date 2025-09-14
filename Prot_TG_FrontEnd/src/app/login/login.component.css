@@ -207,3 +207,20 @@ body {
 .forgot-pass:hover {
   color: #059669;
 }
+
+.toggle-btn {
+  position: absolute;
+  top: 60%;
+  left: 1250px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  color: rgba(0, 0, 0, 0.5); /* cinza meio transparente */
+}
+

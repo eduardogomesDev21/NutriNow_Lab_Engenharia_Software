@@ -11,6 +11,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent {
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
   usuario = {
     nome: '',
     sobrenome: '',
@@ -23,7 +29,7 @@ export class CadastroComponent {
   mensagem = '';
   erro = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   criarConta(): void {
     this.mensagem = '';
@@ -39,4 +45,6 @@ export class CadastroComponent {
       }
     });
   }
+
+
 }
