@@ -15,6 +15,7 @@ export class CadastroComponent {
 
   togglePassword() {
     this.showPassword = !this.showPassword;
+    console.log("Toggle clicado:", this.showPassword);
   }
 
   usuario = {
