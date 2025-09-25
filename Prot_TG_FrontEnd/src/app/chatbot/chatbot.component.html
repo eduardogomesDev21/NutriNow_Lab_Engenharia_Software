@@ -1,61 +1,61 @@
-<div class="chat-container">
+<div class="green-background">
+  
+  <div class="chat-container">
 
-  <!-- Cabeçalho -->
-  <div class="chat-header">
-    <h2>Assistente Nutricional</h2>
-  </div>
+    <!-- Cabeçalho -->
+    <div class="chat-header">
+      <h2>Assistente Nutricional</h2>
+    </div>
 
-  <!-- Área de mensagens com scroll -->
-  <div class="messages-container" #messagesContainer>
-    <div *ngFor="let msg of messages" 
-         [ngClass]="{'message': true, 'user-message': msg.sender === 'user', 'bot-message': msg.sender !== 'user'}">
-      <div class="message-content">
-        {{ msg.text }}
+    <!-- Área de mensagens com scroll -->
+    <div class="messages-container" #messagesContainer>
+      <div *ngFor="let msg of messages"
+        [ngClass]="{'message': true, 'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
+        <div class="message-content">
+          {{ msg.text }}
+          <!-- Timestamp opcional - pode adicionar depois -->
+          <!-- <div class="message-time">{{ now | date:'HH:mm' }}</div> -->
+        </div>
+      </div>
+
+      <!-- Loading indicator melhorado -->
+      <div *ngIf="isLoading" class="message bot-message">
+        <div class="message-content">
+          <div class="typing-indicator">
+            <span>Assistente está digitando</span>
+            <div class="typing-dots">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Loading indicator -->
-    <div *ngIf="isLoading" class="message bot-message">
-      <div class="message-content">Digitando...</div>
-    </div>
-  </div>
+    <!-- Área de input -->
+    <div class="input-container">
 
-  <!-- Área de input -->
-  <div class="input-container">
+      <!-- Input de texto -->
+      <div class="text-input-area">
+        <input type="text" [(ngModel)]="message" (keydown.enter)="sendMessage()" placeholder="Digite sua mensagem..."
+          class="message-input">
 
-    <!-- Input de texto -->
-    <div class="text-input-area">
-      <input 
-        type="text" 
-        [(ngModel)]="message"
-        (keydown.enter)="sendMessage()"
-        placeholder="Digite sua mensagem..."
-        class="message-input">
+        <button type="button" (click)="sendMessage()" [disabled]="!message.trim()" class="send-button">
+          <i class="fas fa-paper-plane"></i>
+          Enviar
+        </button>
+      </div>
 
-      <button 
-        type="button"
-        (click)="sendMessage()" 
-        [disabled]="!message.trim()"
-        class="send-button">
-        Enviar
-      </button>
-    </div>
+      <!-- Input de arquivo -->
+      <div class="file-input-area">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input" #fileInput>
 
-    <!-- Input de arquivo -->
-    <div class="file-input-area">
-      <input 
-        type="file" 
-        (change)="onFileSelected($event)"
-        accept="image/*"
-        class="file-input"
-        #fileInput>
-
-      <button 
-        type="button"
-        (click)="fileInput.click()"
-        class="file-button">
-        Enviar Imagem
-      </button>
+        <button type="button" (click)="fileInput.click()" class="file-button">
+          <i class="fas fa-paperclip"></i>
+          Enviar Imagem
+        </button>
+      </div>
     </div>
   </div>
 </div>
