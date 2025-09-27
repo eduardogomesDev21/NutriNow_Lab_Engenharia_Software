@@ -36,7 +36,7 @@ export class CadastroComponent {
     this.mensagem = '';
     this.erro = '';
 
-    this.http.post('http://localhost:5000/criar-conta', this.usuario).subscribe({
+    this.http.post('http://localhost:5000/cadastro', this.usuario).subscribe({
       next: (res: any) => {
         this.mensagem = res.message || 'Conta criada com sucesso!';
         this.usuario = { nome: '', sobrenome: '', data_nascimento: '', genero: '', email: '', senha: '' };
