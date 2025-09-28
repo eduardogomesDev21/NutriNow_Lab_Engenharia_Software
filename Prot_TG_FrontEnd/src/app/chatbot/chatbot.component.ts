@@ -1,7 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChatbotService, ChatResponse } from '../services/chatbot.service';
+import { Router } from '@angular/router';
+import { AuthService, User } from '../services/auth.service';
+import { ChatService } from './../services/chat.service';
+import { Subscription } from 'rxjs';
+
+interface Message {
+  text: string;
+  isUser: boolean;
+  timestamp: Date;
+}
 
 @Component({
   selector: 'app-chatbot',
@@ -10,72 +19,94 @@ import { ChatbotService, ChatResponse } from '../services/chatbot.service';
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css']
 })
-export class ChatbotComponent implements OnInit {
-  message: string = '';
-  messages: Array<{text: string, sender: 'user' | 'bot'}> = [];
-  isLoading: boolean = false;
+export class ChatbotComponent implements OnInit, OnDestroy {
+  messages: Message[] = [];
+  currentMessage = '';
+  currentUser: User | null = null;
+  loading = false;
+  private subscription = new Subscription();
 
-  constructor(private chatbotService: ChatbotService) { }
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    this.subscription.add(
+      this.authService.currentUser$.subscribe(user => {
+        this.currentUser = user;
+        if (!user) {
+          this.router.navigate(['/login']);
+        }
+      })
+    );
+  }
 
-  sendMessage(): void {
-    if (!this.message.trim()) return;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
-    // Adiciona mensagem do usuário
-    this.messages.push({
-      text: this.message,
-      sender: 'user'
-    });
+  sendMessage() {
+    if (!this.currentMessage.trim() || this.loading) return;
 
-    const currentMessage = this.message;
-    this.message = '';
-    this.isLoading = true;
+    const userMessage: Message = {
+      text: this.currentMessage,
+      isUser: true,
+      timestamp: new Date()
+    };
 
-    // Envia para o backend
-    this.chatbotService.sendMessage(currentMessage).subscribe({
-      next: (response: ChatResponse) => {
-        this.isLoading = false;
-        this.messages.push({
-          text: response.response,
-          sender: 'bot'
-        });
+    this.messages.push(userMessage);
+    const messageText = this.currentMessage;
+    this.currentMessage = '';
+    this.loading = true;
+
+    this.chatService.sendMessage(messageText).subscribe({
+      next: (response) => {
+        this.loading = false;
+        if (response.success) {
+          this.chatService.setSessionId(response.session_id);
+
+          const botMessage: Message = {
+            text: response.response,
+            isUser: false,
+            timestamp: new Date()
+          };
+          this.messages.push(botMessage);
+        } else {
+          this.messages.push({
+            text: response.error || 'Erro ao enviar mensagem',
+            isUser: false,
+            timestamp: new Date()
+          });
+        }
       },
-      error: (error) => {
-        this.isLoading = false;
-        console.error('Erro na comunicação:', error);
+      error: () => {
+        this.loading = false;
         this.messages.push({
-          text: 'Desculpe, ocorreu um erro. Tente novamente.',
-          sender: 'bot'
+          text: 'Erro de conexão com o servidor',
+          isUser: false,
+          timestamp: new Date()
         });
       }
     });
   }
 
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.isLoading = true;
-      
-      this.chatbotService.analyzeImage(file).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          this.messages.push({
-            text: `Análise da imagem: ${response.response}`,
-            sender: 'bot'
-          });
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error('Erro na análise da imagem:', error);
-          this.messages.push({
-            text: 'Erro ao analisar a imagem. Tente novamente.',
-            sender: 'bot'
-          });
-        }
-      });
-    }
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: (err) => {
+        console.error('Erro ao fazer logout:', err);
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
-  
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('Arquivo selecionado:', file.name);
+      // Aqui você pode enviar para o backend ou processar
+    }
+  }
 }

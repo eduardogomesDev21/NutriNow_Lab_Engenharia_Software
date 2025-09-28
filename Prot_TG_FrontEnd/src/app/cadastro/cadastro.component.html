@@ -23,19 +23,19 @@
       <form class="cadastro-form" (ngSubmit)="criarConta()" #form="ngForm">
         <div>
           <label style="margin-left: 10px">Nome</label>
-          <input type="text" placeholder="Nome" [(ngModel)]="usuario.nome" name="nome" required>
+          <input type="text" placeholder="Nome" [(ngModel)]="usuario.first_name" name="nome" required>
         </div>
         <div>
           <label style="margin-left: 10px">Sobrenome</label>
-          <input type="text" placeholder="Sobrenome" [(ngModel)]="usuario.sobrenome" name="sobrenome" required>
+          <input type="text" placeholder="Sobrenome" [(ngModel)]="usuario.last_name" name="sobrenome" required>
         </div>
         <div>
           <label style="margin-left: 10px">Data de nascimento</label>
-          <input type="date" [(ngModel)]="usuario.data_nascimento" name="data_nascimento" required>
+          <input type="date" [(ngModel)]="usuario.birth_date" name="data_nascimento" required>
         </div>
         <div class="input-group">
           <label>Gênero</label>
-          <select [(ngModel)]="usuario.genero" name="genero" required>
+          <select [(ngModel)]="usuario.gender" name="genero" required>
             <option value="">Selecione o seu gênero</option>
             <option>Masculino</option>
             <option>Feminino</option>
@@ -49,7 +49,7 @@
         </div>
         <div class="input-wrapper">
           <label style="margin-left: 10px">Senha</label>
-          <input [type]="showPassword ? 'text' : 'password'" placeholder="Crie uma senha" [(ngModel)]="usuario.senha"
+          <input [type]="showPassword ? 'text' : 'password'" placeholder="Crie uma senha" [(ngModel)]="usuario.password"
             name="senha" required>
           <button type="button" class="toggle-btn" (click)="togglePassword()">
             <!-- Olho aberto -->
@@ -70,7 +70,7 @@
         </div>
 
         <div class="buttons">
-          <button type="submit" class="btn-primary" [disabled]="form.invalid">Criar Conta</button>
+          <button type="submit" class="btn-primary" [disabled]="form.invalid" routerLink="/login">Criar Conta</button>
           <button type="button" class="btn-secondary">Voltar</button>
         </div>
         <p class="login-link">

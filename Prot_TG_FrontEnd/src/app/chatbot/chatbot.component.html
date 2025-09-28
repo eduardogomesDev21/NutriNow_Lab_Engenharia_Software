@@ -10,16 +10,16 @@
     <!-- Área de mensagens com scroll -->
     <div class="messages-container" #messagesContainer>
       <div *ngFor="let msg of messages"
-        [ngClass]="{'message': true, 'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
+        [ngClass]="{'message': true, 'user-message': msg.isUser, 'bot-message': !msg.isUser}">
         <div class="message-content">
           {{ msg.text }}
-          <!-- Timestamp opcional - pode adicionar depois -->
-          <!-- <div class="message-time">{{ now | date:'HH:mm' }}</div> -->
+          <!-- Timestamp opcional -->
+          <!-- <div class="message-time">{{ msg.timestamp | date:'HH:mm' }}</div> -->
         </div>
       </div>
 
-      <!-- Loading indicator melhorado -->
-      <div *ngIf="isLoading" class="message bot-message">
+      <!-- Loading indicator -->
+      <div *ngIf="loading" class="message bot-message">
         <div class="message-content">
           <div class="typing-indicator">
             <span>Assistente está digitando</span>
@@ -38,10 +38,10 @@
 
       <!-- Input de texto -->
       <div class="text-input-area">
-        <input type="text" [(ngModel)]="message" (keydown.enter)="sendMessage()" placeholder="Digite sua mensagem..."
+        <input type="text" [(ngModel)]="currentMessage" (keydown.enter)="sendMessage()" placeholder="Digite sua mensagem..."
           class="message-input">
 
-        <button type="button" (click)="sendMessage()" [disabled]="!message.trim()" class="send-button">
+        <button type="button" (click)="sendMessage()" [disabled]="!currentMessage.trim() || loading" class="send-button">
           <i class="fas fa-paper-plane"></i>
           Enviar
         </button>
@@ -49,7 +49,7 @@
 
       <!-- Input de arquivo -->
       <div class="file-input-area">
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input" #fileInput>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input" #fileInput hidden>
 
         <button type="button" (click)="fileInput.click()" class="file-button">
           <i class="fas fa-paperclip"></i>
