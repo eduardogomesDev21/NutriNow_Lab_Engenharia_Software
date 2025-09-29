@@ -139,6 +139,7 @@ body {
   padding: 12px;
   margin-bottom: 15px;
   transition: border 0.3s, box-shadow 0.3s;
+  position: relative;
 }
 
 .input-group i {
@@ -152,6 +153,7 @@ body {
   background: transparent;
   flex: 1;
   font-size: 14px;
+  padding-right: 40px;
 }
 
 /* Botões */
@@ -210,12 +212,13 @@ body {
 
 .toggle-btn {
   position: absolute;
+  right: 10px; 
   top: 60%;
-  left: 1250px;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0;
 }
 
 .icon {
