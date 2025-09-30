@@ -32,7 +32,7 @@
 
       <div class="input-group">
         <i class="material-symbols-outlined">lock</i>
-        <input [type]="showPassword ? 'text' : 'password'" type="password" placeholder="Senha" [(ngModel)]="credenciais.password" name="senha" required />
+        <input [type]="showPassword ? 'text' : 'password'" type="password" placeholder="Senha" [(ngModel)]="credenciais.senha" name="senha" required />
         <button type="button" class="toggle-btn" (click)="togglePassword()">
           <!-- Olho aberto -->
           <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24"
@@ -51,7 +51,7 @@
         </button>
       </div>
 
-      <button type="submit" class="btn-primary" [disabled]="form.invalid" routerLink="/chatbot">Entrar</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Entrar</button>
       <button type="button" class="btn-secondary" routerLink="/cadastro">Criar conta</button>
     </form>
 
