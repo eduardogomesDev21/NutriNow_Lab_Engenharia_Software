@@ -25,7 +25,8 @@ ENV MYSQL_USER=root
 ENV MYSQL_PASSWORD=
 ENV MYSQL_DATABASE=nutri_chat
 ENV PORT=8000
-ENV GOOGLE_API_KEY= # defina no host ou docker-compose
+#defina no host ou docker-compose
+ENV GOOGLE_API_KEY= 
 
 # Comando padrão para iniciar a aplicação
 CMD ["python", "api.py"]
