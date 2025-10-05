@@ -1,0 +1,31 @@
+# 1. Imagem base Python
+FROM python:3.12-slim AS base
+
+# Diretório de trabalho
+WORKDIR /app
+
+# Evita cache de dependências pip
+ENV PIP_NO_CACHE_DIR=1
+ENV PYTHONUNBUFFERED=1
+
+# Copia requirements e instala dependências
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copia todo o código da aplicação
+COPY . .
+
+# Expondo a porta que o Flask usa
+EXPOSE 8000
+
+# Variáveis de ambiente (defina no docker run ou docker-compose)
+ENV FLASK_ENV=production
+ENV MYSQL_HOST=localhost
+ENV MYSQL_USER=root
+ENV MYSQL_PASSWORD=
+ENV MYSQL_DATABASE=nutri_chat
+ENV PORT=8000
+ENV GOOGLE_API_KEY= # defina no host ou docker-compose
+
+# Comando padrão para iniciar a aplicação
+CMD ["python", "api.py"]
